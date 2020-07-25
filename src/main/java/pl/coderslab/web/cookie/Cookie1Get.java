@@ -30,7 +30,6 @@ public class Cookie1Get extends HttpServlet {
                     break;
                 }
             }
-
         }
     }
 }

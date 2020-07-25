@@ -21,12 +21,25 @@ import java.io.IOException;
 public class Cookie1Del extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Cookie cookie = new Cookie("User", "");
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
+        Cookie[] cookies = req.getCookies();
+        boolean deleted = false;
 
-        resp.addCookie(cookie);
+        if(cookies != null) {
+            for (Cookie c : cookies) {
+                if ("User".equals(c.getName())) {
+                    c.setMaxAge(0);
+                    c.setPath("/");
+                    resp.addCookie(c);
+                    deleted=true;
+                    break;
+                }
+            }
+        }
 
-        resp.getWriter().println("Usunięto ciasteczko");
+        if(deleted){
+            resp.getWriter().println("Usunięto ciasteczko");
+        } else {
+            resp.getWriter().println("BRAK");
+        }
     }
 }
